@@ -5,6 +5,13 @@ import { ShoppingCartContext } from "../../Context";
 const Card = (data) => {
     const context = useContext(ShoppingCartContext);
 
+    const addToCart = (product) => {
+        context.setCartCounter(context.cartCounter +1)
+        context.setCartProducts([...context.cartProducts, product]);
+        context.closeProductDetail();
+        context.openCheckoutSideMenu();
+    }
+
     return (
         <div className="bg-white cursor-pointer w-56 h-60 rounded-lg">
             <figure className="relative mb-2 w-full h-4/5">
@@ -15,7 +22,9 @@ const Card = (data) => {
                     alt={data.data.description}
                     onClick={() => context.openProductDetail(data.data)} 
                 />
-                <div className="absolute top-0 right-0 flex justify-center items-center bg-white w-6 h-6 rounded-full m-2 p-1" onClick={() => context.setCartCounter(context.cartCounter +1)}><PlusIcon></PlusIcon></div>
+                <div className="absolute top-0 right-0 flex justify-center items-center bg-white w-6 h-6 rounded-full m-2 p-1" >
+                    <PlusIcon onClick={() => addToCart(data.data)}></PlusIcon>
+                </div>
             </figure>
             <p className="flex justify-between">
                 <span className="text-sm font-light" onClick={() => context.openProductDetail(data.data)}>{data.data.title}</span>

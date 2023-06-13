@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import { Card } from "../../Components/Card"
 import { Layout } from "../../Components/Layout"
 import { ProductDetail } from "../../Components/ProductDetail";
+import { CheckoutSideMenu } from "../../Components/CheckoutSideMenu";
 
 function Home() {
 
@@ -23,6 +24,7 @@ function Home() {
           }
         </div>
         <ProductDetail />
+        <CheckoutSideMenu />
       </Layout>
   )
 }

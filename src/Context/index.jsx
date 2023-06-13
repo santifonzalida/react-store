@@ -7,12 +7,16 @@ import { createContext, useState } from "react";
     const [cartCounter, setCartCounter] = useState(0);
     const [isProductDetailOpen, setIsProductDetailOpen] = useState(false);
     const [selectedProduct, setSelectedProduc] = useState({});
-    const [isLoading, setIsLoading] = useState(false);
+    const [cartProducts, setCartProducts] = useState([]);
+    const [isCheckoutSideMenuOpen, setIsCheckoutSideMenuOpen] = useState(false);
+
+    const openCheckoutSideMenu = () => setIsCheckoutSideMenuOpen(true);
+    const closeCheckoutSideMenu = () => setIsCheckoutSideMenuOpen(false);
 
     const openProductDetail = (product) => {
         setSelectedProduc(product);
+        closeCheckoutSideMenu();
         setIsProductDetailOpen(true);
-        console.log(selectedProduct)
     }
     const closeProductDetail = () => setIsProductDetailOpen(false);
 
@@ -24,8 +28,11 @@ import { createContext, useState } from "react";
             openProductDetail,
             closeProductDetail,
             selectedProduct,
-            isLoading, 
-            setIsLoading,
+            cartProducts, 
+            setCartProducts,
+            openCheckoutSideMenu,
+            closeCheckoutSideMenu,
+            isCheckoutSideMenuOpen
         }}>
             {children}
         </ShoppingCartContext.Provider>
