@@ -14,9 +14,12 @@ const CheckoutSideMenu = () => {
                     <XMarkIcon className='h-6 w-6 text-black cursor-pointer' onClick={() => context.closeCheckoutSideMenu()}></XMarkIcon>
                 </div>
             </div>
-            {context.cartProducts?.map(product => (
-                <OrderCard props={product} key={product.id} />
-            ))}
+            <div className='px-6'>
+                {context.cartProducts?.map(product => (
+                    <OrderCard props={product} key={product.id} />
+                ))}
+            </div>
+            
         </aside>
     );
 }
