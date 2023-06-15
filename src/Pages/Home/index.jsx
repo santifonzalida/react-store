@@ -2,14 +2,13 @@ import { useState, useEffect } from "react"
 import { Card } from "../../Components/Card"
 import { Layout } from "../../Components/Layout"
 import { ProductDetail } from "../../Components/ProductDetail";
-import { CheckoutSideMenu } from "../../Components/CheckoutSideMenu";
 
 function Home() {
 
   const [products, setProducts] = useState(null);
 
   useEffect(() => {
-    fetch('https://api.escuelajs.co/api/v1/products')
+    fetch('https://api.escuelajs.co/api/v1/products?offset=0&limit=10')
       .then(response => response.json()
       .then(data => setProducts(data)));
   },[])
@@ -24,7 +23,6 @@ function Home() {
           }
         </div>
         <ProductDetail />
-        <CheckoutSideMenu />
       </Layout>
   )
 }
