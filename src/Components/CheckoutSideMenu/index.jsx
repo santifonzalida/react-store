@@ -2,10 +2,22 @@ import { useContext } from 'react';
 import { XMarkIcon } from '@heroicons/react/24/solid'
 import { ShoppingCartContext } from '../../Context';
 import { OrderCard } from '../OrderCard';
+import { totalPrice } from '../../utils';
 import './styles.css';
 
 const CheckoutSideMenu = () => {
     const context = useContext(ShoppingCartContext);
+
+    const deleteProduct = (idProduct) => {
+        let productList = [...context.cartProducts];
+        let index = productList.findIndex(product => product.id == idProduct);
+        if(index > -1) {
+            productList.splice(index,1);
+            context.setCartProducts(productList);
+            context.setCartCounter(productList.length);
+        }
+    }
+
     return (
         <aside className={`${context.isCheckoutSideMenuOpen ? 'flex' : 'hidden'} checkout-side-menu  flex-col fixed right-0 border border-black rounded-lg bg-white`}>
             <div className='flex justify-between items-center'>
@@ -16,10 +28,15 @@ const CheckoutSideMenu = () => {
             </div>
             <div className='px-6 overflow-y-scroll'>
                 {context.cartProducts?.map(product => (
-                    <OrderCard props={product} key={product.id} />
+                    <OrderCard props={product} key={product.id} delete={deleteProduct}/>
                 ))}
             </div>
-            
+            <div className='px-6'>
+                <p className='flex justify-between items-center'>
+                    <span className='font-light'>Total:</span>
+                    <span className='font-medium text-2xl'>${totalPrice(context.cartProducts)}</span>
+                </p>
+            </div>
         </aside>
     );
 }

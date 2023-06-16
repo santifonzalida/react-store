@@ -11,8 +11,14 @@ const Card = (data) => {
         context.closeProductDetail();
         context.openCheckoutSideMenu();
     }
+    
+    const openProductDetail = (product) => {
+        context.setSelectedProduct(product);
+        context.closeCheckoutSideMenu();
+        context.setIsProductDetailOpen(true);
+    }
 
-    const addProduct = (idProduct) => {
+    const renderIcon = (idProduct) => {
         const isInCart = context.cartProducts.filter((product) => product.id === idProduct).length > 0;
 
         if(isInCart){
@@ -38,12 +44,12 @@ const Card = (data) => {
                     className="w-full h-full object-cover rounded-lg" 
                     src={data.data.images[0]} 
                     alt={data.data.description}
-                    onClick={() => context.openProductDetail(data.data)} 
+                    onClick={() => openProductDetail(data.data)} 
                 />
-                {addProduct(data.data.id)}
+                {renderIcon(data.data.id)}
             </figure>
             <p className="flex justify-between">
-                <span className="text-sm font-light" onClick={() => context.openProductDetail(data.data)}>{data.data.title}</span>
+                <span className="text-sm font-light" onClick={() => openProductDetail(data.data)}>{data.data.title}</span>
                 <span className="text-lg font-medium">${data.data.price}</span>
             </p>
         </div>

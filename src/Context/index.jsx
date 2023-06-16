@@ -4,21 +4,28 @@ import { createContext, useState } from "react";
  export const ShoppingCartContext = createContext();
 
  export const ShoppingCartProvider = ({children}) => {
-    const [cartCounter, setCartCounter] = useState(0);
-    const [isProductDetailOpen, setIsProductDetailOpen] = useState(false);
-    const [selectedProduct, setSelectedProduc] = useState({});
-    const [cartProducts, setCartProducts] = useState([]);
-    const [isCheckoutSideMenuOpen, setIsCheckoutSideMenuOpen] = useState(false);
 
+    //Shopping Cart · Increment quantity 
+    const [cartCounter, setCartCounter] = useState(0);
+
+    //Product Detail · Open/Close
+    const [isProductDetailOpen, setIsProductDetailOpen] = useState(false);
+    const closeProductDetail = () => setIsProductDetailOpen(false);
+    const openProductDetail = () => setIsProductDetailOpen(true);
+    
+     // Checkout Side Menu · Open/Close
+    const [isCheckoutSideMenuOpen, setIsCheckoutSideMenuOpen] = useState(false);
     const openCheckoutSideMenu = () => setIsCheckoutSideMenuOpen(true);
     const closeCheckoutSideMenu = () => setIsCheckoutSideMenuOpen(false);
 
-    const openProductDetail = (product) => {
-        setSelectedProduc(product);
-        closeCheckoutSideMenu();
-        setIsProductDetailOpen(true);
-    }
-    const closeProductDetail = () => setIsProductDetailOpen(false);
+    //Produc Detail · Show product
+    const [selectedProduct, setSelectedProduct] = useState({});
+
+    //Shopping Cart · Add products to cart
+    const [cartProducts, setCartProducts] = useState([]);
+
+    //Shopping Cart · Order
+    const [order, setOrder] = useState([]);
 
     return (
         <ShoppingCartContext.Provider value={{
@@ -27,12 +34,16 @@ import { createContext, useState } from "react";
             isProductDetailOpen,
             openProductDetail,
             closeProductDetail,
+            setIsProductDetailOpen,
             selectedProduct,
+            setSelectedProduct,
             cartProducts, 
             setCartProducts,
             openCheckoutSideMenu,
             closeCheckoutSideMenu,
-            isCheckoutSideMenuOpen
+            isCheckoutSideMenuOpen,
+            order,
+            setOrder
         }}>
             {children}
         </ShoppingCartContext.Provider>
