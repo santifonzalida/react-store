@@ -37,8 +37,6 @@ Vite requires Node.js version 14.18+, 16+. However, some templates require a hig
 ### Licencia/License
 
 Este proyecto está bajo la Licencia MIT. Siéntete libre de utilizarlo y modificarlo según tus necesidades.
-Espero que este ejemplo de archivo README te sea útil para tu repositorio de GitHub de una aplicación Vite + React. 
-Puedes personalizarlo y agregar más secciones según tus necesidades y la información que desees proporcionar.
+Espero que este ejemplo te sea útil para tu repositorio de GitHub de una aplicación Vite + React. 
 This project is licensed under the MIT License. Feel free to use and modify it according to your needs.
-I hope you find this sample README file useful for your GitHub repository of a Vite + React app.
-You can customize it and add more sections based on your needs and the information you want to provide.
+I hope you find this application useful for your GitHub repository of a Vite + React app.
