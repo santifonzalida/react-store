@@ -3,13 +3,14 @@ import { useLocation } from "react-router-dom";
 import { ShoppingCartContext } from "../../Context";
 import { Layout } from "../../Components/Layout";
 import { Card } from "../../Components/Card";
+import { ProductDetail } from '../../Components/ProductDetail'
 
 const Category = () => {
     let location = useLocation();
     const context = useContext(ShoppingCartContext);
     let productsFiltered = context.filteredProductsByCategory(context.products, location.state?.id);
     const [searchText, setSearchText] = useState("");
-
+    
     const renderProducts = () => {
         if(productsFiltered?.length > 0) {
             return (
@@ -40,6 +41,7 @@ const Category = () => {
         }
     }
 
+
     return (
         <Layout>
             <div className="flex items-center justify-center relativ w80 mb-4">
@@ -53,6 +55,7 @@ const Category = () => {
             <div className="grid gap-4 grid-cols-4 w-full max-w-screen-lg">
             { searchText ? filterProductsByText() : renderProducts() }
             </div>
+            <ProductDetail />
         </Layout>
     );
 }
