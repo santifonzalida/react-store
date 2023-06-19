@@ -7,6 +7,7 @@ import { MyOrders } from '../MyOrders';
 import { SignIn } from '../SignIn';
 import { NotFound } from '../NotFound';
 import { Navbar } from '../../Components/Navbar';
+import { Category } from '../Category';
 import { CheckoutSideMenu } from '../../Components/CheckoutSideMenu';
 import '../../App.css'
 
@@ -18,6 +19,7 @@ const AppRoutes = () => {
     { path: '/my-orders', element: <MyOrders/> }, 
     { path: '/my-orders/last', element: <MyOrder/> },
     { path: '/my-orders/:id', element: <MyOrder/> },
+    { path: '/category/:id', element: <Category /> },
     { path: '/sign-in', element: <SignIn/> },
     { path: '*' , element: <NotFound />},
   ]);
@@ -33,7 +35,6 @@ function App() {
         <CheckoutSideMenu />
       </BrowserRouter>
     </ShoppingCartProvider>
-      
   )
 }
 

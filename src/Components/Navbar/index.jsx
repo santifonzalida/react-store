@@ -24,25 +24,25 @@ const Navbar = () => {
                 </li>
                 <li>
                     <NavLink 
-                        to='/clothes'
+                        to={{ pathname:'/category/clothes'}} state={{id: 4}}
                         className={({isActive}) => isActive ? activeStyle : undefined}
                     >Clothes</NavLink>
                 </li>
                 <li>
                     <NavLink 
-                        to='/electronics'
+                        to={{ pathname:'/category/electronics'}} state={{id: 2}}
                         className={({isActive}) => isActive ? activeStyle : undefined}
                     >Electronics</NavLink>
                 </li>
                 <li>
                     <NavLink 
-                        to='/fornitures'
+                        to={{ pathname:'/category/fornitures'}} state={{id: 3}}
                         className={({isActive}) => isActive ? activeStyle : undefined}
                     >Fornitures</NavLink>
                 </li>
                 <li>
                     <NavLink 
-                        to='/others'
+                        to={{ pathname:'/category/others'}} state={{id: 5}}
                         className={({isActive}) => isActive ? activeStyle : undefined}
                     >Others</NavLink>
                 </li>

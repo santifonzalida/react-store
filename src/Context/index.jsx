@@ -35,13 +35,17 @@ import { createContext, useState, useEffect } from "react";
     const [searchByTitle, setSearchByTitle] = useState(null);
 
     useEffect(() => {
-      fetch('https://api.escuelajs.co/api/v1/products?offset=0&limit=10')
+      fetch('https://api.escuelajs.co/api/v1/products?offset=0&limit=20')
         .then(response => response.json()
         .then(data => setProducts(data)));
     },[])
 
     const filteredProductsByTitle = (products, searchByTitle) => {
         return products?.filter((product) => product.title.toLowerCase().includes(searchByTitle.toLowerCase()));
+    }
+
+    const filteredProductsByCategory = (products, idCategory) => {
+        return products?.filter(product => product.category?.id == idCategory);
     }
 
     useEffect(() => {
@@ -70,6 +74,7 @@ import { createContext, useState, useEffect } from "react";
             searchByTitle, 
             setSearchByTitle,
             filteredProducts,
+            filteredProductsByCategory
         }}>
             {children}
         </ShoppingCartContext.Provider>
