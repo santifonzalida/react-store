@@ -76,7 +76,7 @@ const Navbar = () => {
                         className={({isActive}) => isActive ? activeStyle : undefined}
                     > Sign in </NavLink>
                 </li>
-                <li className="flex items-center">
+                <li className={`${loginContext.isUserLogin ? 'flex' : 'hidden'} items-center`}>
                     <ShoppingBagIcon className='h-6 w-6 text-black cursor-pointer' onClick={() => context.openCheckoutSideMenu()}></ShoppingBagIcon>
                     <div>
                         {context.cartCounter}
