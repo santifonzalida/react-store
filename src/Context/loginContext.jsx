@@ -43,7 +43,7 @@ import { useLocalStorage } from "./useLocalStorage";
             method: 'GET',
             headers: { 
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}` },
+                'Authorization': `Bearer ${token}`},
         };
 
         fetch('https://api.escuelajs.co/api/v1/auth/profile', requestOptions)
@@ -55,7 +55,7 @@ import { useLocalStorage } from "./useLocalStorage";
                 setError(data.message);
             }else {
                 setUser(data);
-                localStorage.saveItem("tokens", data);
+                setIsUserLogin(true);
             }
         })
         .catch((err) => {
@@ -77,6 +77,7 @@ import { useLocalStorage } from "./useLocalStorage";
                 logOut,
                 isUserLogin,
                 getUserInfo,
+                error,
             }}>
             {children}
         </LoginContext.Provider>
