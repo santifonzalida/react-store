@@ -8,7 +8,6 @@ import { useLocalStorage } from "./useLocalStorage";
 
     const navigate = useNavigate();
     const localStorage = useLocalStorage();
-
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [isUserLogin, setIsUserLogin] = useState(false);
@@ -18,6 +17,7 @@ import { useLocalStorage } from "./useLocalStorage";
 
     const login = () => {
         setIsLoading(true);
+        setError(null);
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -29,15 +29,19 @@ import { useLocalStorage } from "./useLocalStorage";
             .then(data => {
                 if(data.statusCode == 401) {
                     setIsUserLogin(false);
+                    setIsLoading(false);
+                    setError(data);
                 } else if(data.access_token) {
                     setIsUserLogin(true);
                     localStorage.saveItem("tokens", data);
                     setIsUserLogin(true);
                     navigate('/my-account');
                     setIsLoading(false);
+                    setError(null);
                 }
             }
         ));
+        timeRenderErrorMessage();
     }
 
     const getUserInfo = () => {
@@ -74,6 +78,12 @@ import { useLocalStorage } from "./useLocalStorage";
         setIsUserLogin(false);
         setUser(null);
         navigate('/sign-in');
+    }
+
+    const timeRenderErrorMessage = () => {
+        setTimeout(() => {
+            setError(false);
+        },5000);
     }
         
     return (

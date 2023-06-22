@@ -32,15 +32,23 @@ function SignIn() {
         type="text"
         placeholder='username'
         className='rounded-lg border border-black w-80 p-4 mb-4 focus:outline-none'
-        onChange={(event) => context.setUsername(event.target.value)} />
+        onChange={(event) => context.setUsername(event.target.value)} 
+        required />
       <input
         type="password"
         placeholder='password'
         className='rounded-lg border border-black w-80 p-4 mb-4 focus:outline-none'
-        onChange={(event) => context.setPassword(event.target.value)} />
+        onChange={(event) => context.setPassword(event.target.value)}
+        required />
       <div className='flex items-center justify-center relative w-80 mb-4'>
         {renderLoginButton()}
       </div>
+      <div className={`${context.error ? 'flex' : 'hidden'}  items-center justify-center relative w-80 mb-4 bg-red-500 rounded-lg`}>
+          <p>
+            Invalid username or password...
+          </p>
+        </div>
+      
     </Layout>
   )
 }
