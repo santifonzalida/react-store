@@ -14,8 +14,10 @@ import { useLocalStorage } from "./useLocalStorage";
     const [isUserLogin, setIsUserLogin] = useState(false);
     const [user, setUser] = useState(null);
     const [error, setError] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
 
     const login = () => {
+        setIsLoading(true);
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -25,19 +27,21 @@ import { useLocalStorage } from "./useLocalStorage";
         fetch('https://api.escuelajs.co/api/v1/auth/login', requestOptions)
             .then(response => response.json()
             .then(data => {
-                setIsUserLogin(true);
-                localStorage.saveItem("tokens", data);
                 if(data.statusCode == 401) {
                     setIsUserLogin(false);
                 } else if(data.access_token) {
                     setIsUserLogin(true);
+                    localStorage.saveItem("tokens", data);
+                    setIsUserLogin(true);
                     navigate('/my-account');
+                    setIsLoading(false);
                 }
             }
         ));
     }
 
     const getUserInfo = () => {
+        setIsLoading(true);
         const token = localStorage.getItem("tokens").access_token;
         const requestOptions = {
             method: 'GET',
@@ -57,9 +61,11 @@ import { useLocalStorage } from "./useLocalStorage";
                 setUser(data);
                 setIsUserLogin(true);
             }
+            setIsLoading(false);
         })
         .catch((err) => {
             setError(err);
+            setIsLoading(false);
         });
     }
 
@@ -81,6 +87,7 @@ import { useLocalStorage } from "./useLocalStorage";
                 isUserLogin,
                 getUserInfo,
                 error,
+                isLoading
             }}>
             {children}
         </LoginContext.Provider>
