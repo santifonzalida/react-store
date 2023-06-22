@@ -1,11 +1,13 @@
 import { useContext } from "react";
-import { NavLink } from "react-router-dom"
+import { Link, NavLink } from "react-router-dom"
 import { ShoppingCartContext } from "../../Context";
+import { LoginContext } from "../../Context/loginContext";
 import { ShoppingBagIcon } from '@heroicons/react/24/solid'
 
 
 const Navbar = () => {
     const context = useContext(ShoppingCartContext);
+    const loginContext = useContext(LoginContext);
     const activeStyle = "underline underline-offset-4"
 
     return (
@@ -49,26 +51,26 @@ const Navbar = () => {
 
             </ul>
             <ul className="flex items-center gap-4">
-                <li className="text-black/60">santiifonzalida@gmail.com</li>
-                <li>
-                    <NavLink 
-                        to='/'
-                        className={({isActive}) => isActive ? activeStyle : undefined}
-                    > Shopi </NavLink>
-                </li>
-                <li>
+                <li className={`${loginContext.isUserLogin ? '' : 'hidden'} text-black/60`}>{loginContext.user?.email}</li>
+                <li className={`${loginContext.isUserLogin ? '' : 'hidden'}`}>
                     <NavLink 
                         to='/my-orders'
                         className={({isActive}) => isActive ? activeStyle : undefined}
                     > My orders </NavLink>
                 </li>
-                <li>
+                <li className={`${loginContext.isUserLogin ? '' : 'hidden'}`}>
                     <NavLink 
                         to='/my-account'
                         className={({isActive}) => isActive ? activeStyle : undefined}
                     > My account </NavLink>
                 </li>
-                <li>
+                <li className={`${loginContext.isUserLogin ? '' : 'hidden'}`}>
+                    <Link to='' onClick={() => loginContext.logout()}>
+                        Sign out 
+                    </Link>
+                     
+                </li>
+                <li className={`${loginContext.isUserLogin ? 'hidden' : ''}`}>
                     <NavLink 
                         to='/sign-in'
                         className={({isActive}) => isActive ? activeStyle : undefined}

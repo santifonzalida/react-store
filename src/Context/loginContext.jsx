@@ -64,7 +64,10 @@ import { useLocalStorage } from "./useLocalStorage";
     }
 
     const logOut = () => {
-        return "logout";
+        localStorage.saveItem('tokens', {});
+        setIsUserLogin(false);
+        setUser(null);
+        navigate('/sign-in');
     }
         
     return (
