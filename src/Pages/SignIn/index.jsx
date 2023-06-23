@@ -43,11 +43,18 @@ function SignIn() {
       <div className='flex items-center justify-center relative w-80 mb-4'>
         {renderLoginButton()}
       </div>
+      <a className="cursor-pointer" onClick={() => console.log('create new acoount')}>
+        <p className="text-md italic underline">
+          Create new account
+        </p>
+      </a>
+
+
       <div className={`${context.error ? 'flex' : 'hidden'}  items-center justify-center relative w-80 mb-4 bg-red-500 rounded-lg`}>
-          <p>
-            Invalid username or password...
-          </p>
-        </div>
+        <p>
+          Invalid username or password...
+        </p>
+      </div>
       
     </Layout>
   )
