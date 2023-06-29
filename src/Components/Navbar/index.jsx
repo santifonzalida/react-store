@@ -72,7 +72,7 @@ const Navbar = () => {
                 </li>
                 <li className={`${loginContext.isUserLogin ? 'hidden' : ''}`}>
                     <NavLink 
-                        to='/sign-in'
+                        to='/login'
                         className={({isActive}) => isActive ? activeStyle : undefined}
                     > Sign in </NavLink>
                 </li>

@@ -25,7 +25,7 @@ import { useLocalStorage } from "./useLocalStorage";
         };
 
         fetch('https://api.escuelajs.co/api/v1/auth/login', requestOptions)
-            .then(response => response.json()
+            .then(response => response.json())
             .then(data => {
                 if(data.statusCode == 401) {
                     setIsUserLogin(false);
@@ -40,7 +40,7 @@ import { useLocalStorage } from "./useLocalStorage";
                     setError(null);
                 }
             }
-        ));
+        );
         timeRenderErrorMessage();
     }
 
@@ -80,6 +80,28 @@ import { useLocalStorage } from "./useLocalStorage";
         navigate('/sign-in');
     }
 
+    const createUser = (newUSer) => {
+        setIsLoading(true);
+
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({...newUSer})
+        };
+
+        fetch('https://api.escuelajs.co/api/v1/users', requestOptions)
+            .then(response => response.json())
+            .then(data => {
+                setUser(data);
+                setIsLoading(false);
+            })
+            .catch((err) => {
+                setError(err);
+                setIsLoading(false);
+            }
+        );
+    }
+
     const timeRenderErrorMessage = () => {
         setTimeout(() => {
             setError(false);
@@ -97,7 +119,8 @@ import { useLocalStorage } from "./useLocalStorage";
                 isUserLogin,
                 getUserInfo,
                 error,
-                isLoading
+                isLoading,
+                createUser
             }}>
             {children}
         </LoginContext.Provider>
