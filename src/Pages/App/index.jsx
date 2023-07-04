@@ -4,12 +4,13 @@ import { Home } from '../Home';
 import { MyAccount } from '../MyAccount';
 import { MyOrder } from '../MyOrder';
 import { MyOrders } from '../MyOrders';
-import { SignIn } from '../SignIn';
+import { Login } from '../Login';
 import { NotFound } from '../NotFound';
 import { Navbar } from '../../Components/Navbar';
 import { Category } from '../Category';
 import { CheckoutSideMenu } from '../../Components/CheckoutSideMenu';
 import '../../App.css'
+import { LoginContextProvider } from '../../Context/loginContext';
 
 const AppRoutes = () => {
   let routes = useRoutes([
@@ -20,7 +21,7 @@ const AppRoutes = () => {
     { path: '/my-orders/last', element: <MyOrder/> },
     { path: '/my-orders/:id', element: <MyOrder/> },
     { path: '/category/:id', element: <Category /> },
-    { path: '/sign-in', element: <SignIn/> },
+    { path: '/login', element: <Login/> },
     { path: '*' , element: <NotFound />},
   ]);
   return routes;
@@ -28,13 +29,15 @@ const AppRoutes = () => {
 
 function App() {
   return (
-    <ShoppingCartProvider>
-      <BrowserRouter>
-        <AppRoutes />
-        <Navbar />
-        <CheckoutSideMenu />
-      </BrowserRouter>
-    </ShoppingCartProvider>
+      <ShoppingCartProvider>
+        <BrowserRouter>
+        <LoginContextProvider>
+          <AppRoutes />
+          <Navbar />
+          <CheckoutSideMenu />
+          </LoginContextProvider>
+        </BrowserRouter>
+      </ShoppingCartProvider>
   )
 }
 
