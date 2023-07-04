@@ -1,13 +1,25 @@
-import { useContext, useEffect } from "react"
-import { Layout } from "../../Components/Layout"
-import { LoginContext } from "../../Context/loginContext"
+import { useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { Layout } from "../../Components/Layout";
+import { LoginContext } from "../../Context/loginContext";
 
 function MyAccount() {
   
+  const navigate = useNavigate();
   const context = useContext(LoginContext);
 
   useEffect(() => {
-    context.getUserInfo();
+    context.getUserInfo().then((data) => {
+      if(data.statusCode == 401) {
+          navigate('/login');
+          context.setIsUserLogin(false);
+          context.setError(data.message);
+      }else {
+          context.setUser(data);
+          context.setIsUserLogin(true);
+      }
+      context.setIsLoading(false);
+      });
   },[])
 
   return (

@@ -1,50 +1,33 @@
 import { createContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useLocalStorage } from "./useLocalStorage";
+import { useLocalStorage } from "../Context/useLocalStorage";
 
- export const LoginContext = createContext();
+export const LoginContext = createContext();
 
- export const LoginContextProvider = ({children}) => {
+export const LoginContextProvider = ({children}) => {
 
-    const navigate = useNavigate();
     const localStorage = useLocalStorage();
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
+    const navigate = useNavigate();
     const [isUserLogin, setIsUserLogin] = useState(false);
     const [user, setUser] = useState(null);
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
 
-    const login = () => {
+    const login = async(credentials) => {
         setIsLoading(true);
         setError(null);
+
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({email: username, password: password})
+            body: JSON.stringify({...credentials})
         };
 
-        fetch('https://api.escuelajs.co/api/v1/auth/login', requestOptions)
-            .then(response => response.json())
-            .then(data => {
-                if(data.statusCode == 401) {
-                    setIsUserLogin(false);
-                    setIsLoading(false);
-                    setError(data);
-                } else if(data.access_token) {
-                    setIsUserLogin(true);
-                    localStorage.saveItem("tokens", data);
-                    setIsUserLogin(true);
-                    navigate('/my-account');
-                    setIsLoading(false);
-                    setError(null);
-                }
-            }
-        );
-        timeRenderErrorMessage();
+        const response = await fetch('https://api.escuelajs.co/api/v1/auth/login', requestOptions);
+        return await response.json();
     }
 
-    const getUserInfo = () => {
+    const getUserInfo = async() => {
         setIsLoading(true);
         const token = localStorage.getItem("tokens").access_token;
         const requestOptions = {
@@ -54,33 +37,18 @@ import { useLocalStorage } from "./useLocalStorage";
                 'Authorization': `Bearer ${token}`},
         };
 
-        fetch('https://api.escuelajs.co/api/v1/auth/profile', requestOptions)
-        .then(response => response.json())
-        .then(data => {
-            if(data.statusCode == 401) {
-                navigate('/sign-in');
-                setIsUserLogin(false);
-                setError(data.message);
-            }else {
-                setUser(data);
-                setIsUserLogin(true);
-            }
-            setIsLoading(false);
-        })
-        .catch((err) => {
-            setError(err);
-            setIsLoading(false);
-        });
+        const response = await fetch('https://api.escuelajs.co/api/v1/auth/profile', requestOptions);
+        return await response.json();
     }
 
     const logOut = () => {
         localStorage.saveItem('tokens', {});
         setIsUserLogin(false);
         setUser(null);
-        navigate('/sign-in');
+        navigate('/login');
     }
 
-    const createUser = (newUSer) => {
+    const createUser = async(newUSer) => {
         setIsLoading(true);
 
         const requestOptions = {
@@ -89,17 +57,8 @@ import { useLocalStorage } from "./useLocalStorage";
             body: JSON.stringify({...newUSer})
         };
 
-        fetch('https://api.escuelajs.co/api/v1/users', requestOptions)
-            .then(response => response.json())
-            .then(data => {
-                setUser(data);
-                setIsLoading(false);
-            })
-            .catch((err) => {
-                setError(err);
-                setIsLoading(false);
-            }
-        );
+        const response = await fetch('https://api.escuelajs.co/api/v1/users', requestOptions);
+        return await response.json();
     }
 
     const timeRenderErrorMessage = () => {
@@ -112,15 +71,18 @@ import { useLocalStorage } from "./useLocalStorage";
         <LoginContext.Provider value={
             {
                 user,
-                setUsername,
-                setPassword,
+                setUser,
                 login,
                 logOut,
                 isUserLogin,
+                setIsUserLogin,
                 getUserInfo,
+                setError,
                 error,
                 isLoading,
-                createUser
+                setIsLoading,
+                createUser,
+                timeRenderErrorMessage
             }}>
             {children}
         </LoginContext.Provider>
