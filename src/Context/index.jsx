@@ -35,9 +35,11 @@ import { createContext, useState, useEffect } from "react";
     const [searchByTitle, setSearchByTitle] = useState(null);
 
     useEffect(() => {
-      fetch('https://api.escuelajs.co/api/v1/products?offset=0&limit=20')
-        .then(response => response.json()
-        .then(data => setProducts(data)));
+        fetch('https://api.escuelajs.co/api/v1/products?offset=0&limit=20')
+            .then(response => response.json()
+            .then(data => {
+                setProducts(data)
+            }));
     },[])
 
     const filteredProductsByTitle = (products, searchByTitle) => {
@@ -74,7 +76,7 @@ import { createContext, useState, useEffect } from "react";
             searchByTitle, 
             setSearchByTitle,
             filteredProducts,
-            filteredProductsByCategory
+            filteredProductsByCategory,
         }}>
             {children}
         </ShoppingCartContext.Provider>
