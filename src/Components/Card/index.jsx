@@ -64,7 +64,7 @@ const Card = (data) => {
                 </div>
             )}
             <p className="flex justify-between">
-                <span className="text-sm font-light truncate" onClick={() => openProductDetail(data.data)}>{data.data.title}</span>
+                <span className="text-sm font-light truncate pt-1" onClick={() => openProductDetail(data.data)}>{data.data.title}</span>
                 <span className="text-lg font-medium">${data.data.price}</span>
             </p>
             <img
