@@ -61,6 +61,17 @@ export const LoginContextProvider = ({children}) => {
         return await response.json();
     }
 
+    const updateUserInformation = async() => {
+        const requestOptions = {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({...user})
+        };
+
+        const response = await fetch(`https://api.escuelajs.co/api/v1/users/${user.id}`, requestOptions);
+        return await response.json();
+    }
+
     const timeRenderErrorMessage = () => {
         setTimeout(() => {
             setError(false);
@@ -82,7 +93,8 @@ export const LoginContextProvider = ({children}) => {
                 isLoading,
                 setIsLoading,
                 createUser,
-                timeRenderErrorMessage
+                timeRenderErrorMessage,
+                updateUserInformation
             }}>
             {children}
         </LoginContext.Provider>
